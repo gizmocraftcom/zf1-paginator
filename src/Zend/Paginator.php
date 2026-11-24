@@ -274,7 +274,7 @@ class Zend_Paginator implements Countable, IteratorAggregate
                     $adapter = 'DbSelect';
                 } elseif ($data instanceof Iterator) {
                     $adapter = 'Iterator';
-                } elseif (is_integer($data)) {
+                } elseif (is_int($data)) {
                     $adapter = 'Null';
                 } else {
                     $type = (is_object($data)) ? get_class($data) : gettype($data);

@@ -122,7 +122,7 @@ class Zend_Paginator_Adapter_DbSelect implements Zend_Paginator_Adapter_Interfac
             $result = $rowCount->query(Zend_Db::FETCH_ASSOC)->fetch();
 
             $this->_rowCount = count($result) > 0 ? $result[$rowCountColumn] : 0;
-        } elseif (is_integer($rowCount)) {
+        } elseif (is_int($rowCount)) {
             $this->_rowCount = $rowCount;
         } else {
             throw new Zend_Paginator_Exception('Invalid row count');
