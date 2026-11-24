@@ -20,6 +20,7 @@
  * @version    $Id$
  */
 
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @category   Zend
@@ -27,13 +28,11 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @group      Zend_Paginator
  */
+#[Group('Zend_Paginator')]
 class Zend_Paginator_Adapter_DbTableSelectTest extends Zend_Paginator_Adapter_DbSelectTest
 {
-    /**
-     * @group ZF-3775
-     */
+    #[Group('ZF-3775')]
     public function testSelectDoesReturnZendDbTableRowset()
     {
         $query   = $this->_table->select();

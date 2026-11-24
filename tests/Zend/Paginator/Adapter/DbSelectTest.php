@@ -20,6 +20,9 @@
  * @version    $Id$
  */
 
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\Attributes\Group;
+
 require_once dirname(__FILE__) . '/../_files/TestTable.php';
 
 /**
@@ -28,8 +31,8 @@ require_once dirname(__FILE__) . '/../_files/TestTable.php';
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @group      Zend_Paginator
  */
+#[Group('Zend_Paginator')]
 class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
 {
     /**
@@ -84,12 +87,10 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         parent::tearDown();
     }
 
-    /**
-     * @group ZF-6989
-     */
+    #[Group('ZF-6989')]
     public function testCacheIdentifierIsHashOfAssembledSelect()
     {
-        $dbAdapter = $this->getMockForAbstractClass('Zend_Db_Adapter_Abstract', array(''), '', false);
+        $dbAdapter = new Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => ':memory:'));
         $select    = new Zend_Db_Select($dbAdapter);
         $select->from('ZF_6989');
 
@@ -193,9 +194,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(500, $count);
     }
 
-    /**
-     * @group ZF-4001
-     */
+    #[Group('ZF-4001')]
     public function testGroupByQueryReturnsOneRow()
     {
         $query = $this->_db->select()->from('test')
@@ -208,9 +207,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(500, $adapter->count());
     }
 
-    /**
-     * @group ZF-4001
-     */
+    #[Group('ZF-4001')]
     public function testGroupByQueryOnEmptyTableReturnsRowCountZero()
     {
         $db = new Zend_Db_Adapter_Pdo_Sqlite(array(
@@ -225,9 +222,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(0, $adapter->count());
     }
 
-    /**
-     * @group ZF-4001
-     */
+    #[Group('ZF-4001')]
     public function testGroupByQueryReturnsCorrectResult()
     {
         $query = $this->_db->select()->from('test')
@@ -239,9 +234,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(2, $adapter->count());
     }
 
-    /**
-     * @group ZF-4032
-     */
+    #[Group('ZF-4032')]
     public function testDistinctColumnQueryReturnsCorrectResult()
     {
         $query = $this->_db->select()->from('test', 'testgroup')
@@ -253,9 +246,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(2, $adapter->count());
     }
 
-    /**
-     * @group ZF-4094
-     */
+    #[Group('ZF-4094')]
     public function testSelectSpecificColumns()
     {
         $number = $this->_db->quoteIdentifier('number');
@@ -266,9 +257,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(500, $adapter->count());
     }
 
-    /**
-     * @group ZF-4177
-     */
+    #[Group('ZF-4177')]
     public function testSelectDistinctAllUsesRegularCountAll()
     {
         $query = $this->_db->select()->from('test')
@@ -278,10 +267,8 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(500, $adapter->count());
     }
 
-    /**
-     * @group ZF-5233
-     * @doesNotPerformAssertions
-     */
+    #[Group('ZF-5233')]
+    #[DoesNotPerformAssertions]
     public function testSelectHasAliasedColumns()
     {
         $db = $this->_db;
@@ -349,9 +336,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @group ZF-5956
-     */
+    #[Group('ZF-5956')]
     public function testUnionSelect()
     {
         $union = $this->_db->select()->union(array(
@@ -366,9 +351,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @group ZF-7045
-     */
+    #[Group('ZF-7045')]
     public function testGetCountSelect()
     {
         $union = $this->_db->select()->union(array(
@@ -383,9 +366,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $adapter->getCountSelect()->__toString());
     }
 
-    /**
-     * @group ZF-5295
-     */
+    #[Group('ZF-5295')]
     public function testMultipleDistinctColumns()
     {
         $select = $this->_db->select()->from('test', array('testgroup', 'number'))
@@ -399,9 +380,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(500, $adapter->count());
     }
 
-    /**
-     * @group ZF-5295
-     */
+    #[Group('ZF-5295')]
     public function testSingleDistinctColumn()
     {
         $select = $this->_db->select()->from('test', 'testgroup')
@@ -415,9 +394,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(2, $adapter->count());
     }
 
-    /**
-     * @group ZF-6330
-     */
+    #[Group('ZF-6330')]
     public function testGroupByMultipleColumns()
     {
         $select = $this->_db->select()->from('test', 'testgroup')
@@ -431,9 +408,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(500, $adapter->count());
     }
 
-    /**
-     * @group ZF-6330
-     */
+    #[Group('ZF-6330')]
     public function testGroupBySingleColumn()
     {
         $select = $this->_db->select()->from('test', 'testgroup')
@@ -447,9 +422,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(2, $adapter->count());
     }
 
-    /**
-     * @group ZF-6562
-     */
+    #[Group('ZF-6562')]
     public function testSelectWithHaving()
     {
         $select = $this->_db->select()->from('test')
@@ -464,9 +437,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(250, $adapter->count());
     }
 
-    /**
-     * @group ZF-7127
-     */
+    #[Group('ZF-7127')]
     public function testMultipleGroupSelect()
     {
         $select = $this->_db->select()->from('test')
@@ -482,9 +453,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(250, $adapter->count());
     }
 
-    /**
-     * @group ZF-10884
-     */
+    #[Group('ZF-10884')]
     public function testSetRowCountWithAlias()
     {
         $select = $this->_db->select();
@@ -504,9 +473,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $lastQuery);
     }
 
-    /**
-     * @group ZF-7434
-     */
+    #[Group('ZF-7434')]
     public function testGroupByOneColumnWithZendExpr()
     {
         $select = $this->_db->select();
@@ -518,9 +485,7 @@ class Zend_Paginator_Adapter_DbSelectTest extends PHPUnit\Framework\TestCase
         $this->assertEquals(2, $adapter->count());
     }
 
-    /**
-     * @group ZF-10704
-     */
+    #[Group('ZF-10704')]
     public function testObjectSelectWithBind()
     {
         $select = $this->_db->select();

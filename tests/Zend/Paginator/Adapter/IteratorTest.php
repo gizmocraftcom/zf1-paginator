@@ -20,6 +20,8 @@
  * @version    $Id$
  */
 
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * @category   Zend
@@ -27,8 +29,8 @@
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @group      Zend_Paginator
  */
+#[Group('Zend_Paginator')]
 class Zend_Paginator_Adapter_IteratorTest extends PHPUnit\Framework\TestCase
 {
     /**
@@ -97,10 +99,8 @@ class Zend_Paginator_Adapter_IteratorTest extends PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @group ZF-4151
-     * @doesNotPerformAssertions
-     */
+    #[Group('ZF-4151')]
+    #[DoesNotPerformAssertions]
     public function testDoesNotThrowOutOfBoundsExceptionIfIteratorIsEmpty()
     {
         $this->_paginator = Zend_Paginator::factory(new ArrayIterator(array()));
@@ -112,9 +112,7 @@ class Zend_Paginator_Adapter_IteratorTest extends PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @group ZF-8084
-     */
+    #[Group('ZF-8084')]
     public function testGetItemsSerializable()
     {
         $items         = $this->_adapter->getItems(0, 1);
@@ -123,9 +121,7 @@ class Zend_Paginator_Adapter_IteratorTest extends PHPUnit\Framework\TestCase
         $this->assertTrue(($items->getInnerIterator() == $innerIterator), 'getItems has to be serializable to use caching');
     }
 
-    /**
-     * @group ZF-4151
-     */
+    #[Group('ZF-4151')]
     public function testEmptySet()
     {
         $iterator       = new ArrayIterator(array());

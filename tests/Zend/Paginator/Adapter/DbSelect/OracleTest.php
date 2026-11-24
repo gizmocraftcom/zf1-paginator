@@ -20,6 +20,8 @@
  * @version    $Id$
  */
 
+use PHPUnit\Framework\Attributes\Group;
+
 require_once dirname(__FILE__) . '/../../_files/TestTable.php';
 
 /**
@@ -28,8 +30,8 @@ require_once dirname(__FILE__) . '/../../_files/TestTable.php';
  * @subpackage UnitTests
  * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @group      Zend_Paginator
  */
+#[Group('Zend_Paginator')]
 class Zend_Paginator_Adapter_DbSelect_OracleTest extends Zend_Paginator_Adapter_DbSelectTest
 {
 
@@ -72,7 +74,9 @@ class Zend_Paginator_Adapter_DbSelect_OracleTest extends Zend_Paginator_Adapter_
      */
     protected function tearDown(): void
     {
-        $this->_dropTable();
+        if ($this->_db !== null) {
+            $this->_dropTable();
+        }
         $this->_db      = null;
         $this->_adapter = null;
     }
